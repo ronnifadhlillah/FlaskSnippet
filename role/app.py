@@ -1,4 +1,5 @@
 from flask import Flask,render_template,Blueprint,request
+import functools
 
 role={
     "administrator":"1",
@@ -24,14 +25,21 @@ def build():
             users=request.form['user']
             password=request.form['pass']
             if users in user and user[users]==password:
-                print('test')
+                session['user']=users
             else:
                 print('false')
 
 
         return render_template('index.html')
-    return a
 
+    @a.before_app_request
+    def loadUser():
+        userName=session.get['user']
+        if userName is None:
+            g.user=None
+        else:
+            g.user=userName
+    return a
 
 
 if __name__=='__main__':
