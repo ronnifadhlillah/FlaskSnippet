@@ -1,5 +1,5 @@
 from flask import Flask,g,render_template,Blueprint,request,session,url_for,redirect
-from middleware import login_required
+from middleware import login_required,middleware,templated
 import functools
 
 role={
@@ -21,6 +21,7 @@ def build():
     a=eng()
     a.secret_key=b'y\xb0\xa6]L\xed\xbd\x80[\xc0\xa8\xdd\xc6]<\x9e'
     a.jinja_env.auto_reload=True
+    a.DEBUG=True
 
 
     @a.before_request
@@ -44,9 +45,13 @@ def build():
                 return render_template('login.html')
         return render_template('login.html')
 
+
     @a.route('/index',methods=['GET','POST'])
     @login_required
+    @middleware({'administrator','public'})
+    # @templated('index.html')
     def index():
+        # return dict(value=42)
         return render_template('index.html')
 
     @a.route('/logout',methods=['GET','POST'])
