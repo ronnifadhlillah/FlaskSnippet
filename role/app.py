@@ -48,7 +48,7 @@ def build():
 
     @a.route('/index',methods=['GET','POST'])
     @login_required
-    @middleware({'administrator','public'})
+    @middleware(['administrator','public'])
     # @templated('index.html')
     def index():
         # return dict(value=42)

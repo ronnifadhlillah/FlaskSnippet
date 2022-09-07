@@ -28,11 +28,10 @@ def templated(template=None):
     return decorator
 
 def middleware(perm=None):
-    print(perm)
     def decorator(view):
         @functools.wraps(view)
         def decFunc(**kwargs):
-            print(view())
+            print(perm)
             # print(view())
             return view(**kwargs)
         return decFunc
