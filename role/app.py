@@ -1,12 +1,6 @@
 from flask import Flask,g,render_template,Blueprint,request,session,url_for,redirect
-from middleware import login_required,middleware,templated
+from middleware import login_required,roles
 import functools
-
-role={
-    "administrator":"1",
-    "staff":"2",
-    "public":"3"
-}
 
 user={
     'admin':'admin',
@@ -48,8 +42,7 @@ def build():
 
     @a.route('/index',methods=['GET','POST'])
     @login_required
-    @middleware(['administrator','public'])
-    # @templated('index.html')
+    @roles(['1','2'])
     def index():
         # return dict(value=42)
         return render_template('index.html')

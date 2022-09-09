@@ -1,4 +1,5 @@
 from flask import g,redirect,url_for,render_template
+from roles import role
 import functools
 
 def login_required(view):
@@ -9,30 +10,18 @@ def login_required(view):
         return view(**kwargs)
     return wrapped_view
 
-
-def templated(template=None):
-    print(template)
-    def decorator(f):
-        @functools.wraps(f)
-        def decorated_function(*args, **kwargs):
-            template_name = template
-            if template_name is None:
-                template_name = f"{request.endpoint.replace('.', '/')}.html"
-            ctx = f(*args, **kwargs)
-            if ctx is None:
-                ctx = {}
-            elif not isinstance(ctx, dict):
-                return ctx
-            return render_template(template_name, **ctx)
-        return decorated_function
-    return decorator
-
-def middleware(perm=None):
+def roles(perm=None):
     def decorator(view):
         @functools.wraps(view)
         def decFunc(**kwargs):
-            print(perm)
-            # print(view())
+            # print(any(isinstance(i,dict) for i in role.values()))
+            for i in role[g.user]:
+                if i in perm:
+                    print('test')
+                else:
+                    print('fuk')
+            # if role['admin']['1'] in perm:
+            #     print('yuuhhu')
             return view(**kwargs)
         return decFunc
     return decorator
