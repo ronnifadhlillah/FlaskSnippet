@@ -55,7 +55,7 @@ def build():
 
     @a.route('/staff',methods=['GET','POST'])
     @login_required
-    @roles(['2'])
+    @roles(['2','3'])
     def staff():
         return render_template('staff.html')
 
