@@ -14,14 +14,12 @@ def roles(perm=None):
     def decorator(view):
         @functools.wraps(view)
         def decFunc(**kwargs):
-            # print(any(isinstance(i,dict) for i in role.values()))
             for i in role[g.user]:
-                if i in perm:
-                    print('test')
+                print(role[g.user])
+                if i not in perm:
+                    return redirect(url_for('error'))
                 else:
-                    print('fuk')
-            # if role['admin']['1'] in perm:
-            #     print('yuuhhu')
+                    return view(**kwargs)
             return view(**kwargs)
         return decFunc
     return decorator

@@ -5,8 +5,10 @@
     <title>Role Test</title>
   </head>
   <body>
-    this is an index
-    {{g.user}}
+    <a href="{{url_for('admin')}}">for admin</a>
+    <a href="{{url_for('staff')}}">for staff</a>
+    <a href="{{url_for('public')}}">for public</a>
     <a href="{{url_for('logout')}}">logout</a>
+    <h1>{{g.user}}</h1>
   </body>
 </html>

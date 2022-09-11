@@ -15,7 +15,7 @@ def build():
     a=eng()
     a.secret_key=b'y\xb0\xa6]L\xed\xbd\x80[\xc0\xa8\xdd\xc6]<\x9e'
     a.jinja_env.auto_reload=True
-    a.DEBUG=True
+    a.config['DEBUG']=True
 
 
     @a.before_request
@@ -42,10 +42,32 @@ def build():
 
     @a.route('/index',methods=['GET','POST'])
     @login_required
-    @roles(['1','2'])
+    @roles(['1','2','3'])
     def index():
         # return dict(value=42)
         return render_template('index.html')
+
+    @a.route('/admin',methods=['GET','POST'])
+    @login_required
+    @roles(['1'])
+    def admin():
+        return render_template('admin.html')
+
+    @a.route('/staff',methods=['GET','POST'])
+    @login_required
+    @roles(['2'])
+    def staff():
+        return render_template('staff.html')
+
+    @a.route('/public',methods=['GET','POST'])
+    @login_required
+    @roles(['3'])
+    def public():
+        return render_template('public.html')
+
+    @a.route('/error',methods=['GET','POST'])
+    def error():
+        return render_template('error.html')
 
     @a.route('/logout',methods=['GET','POST'])
     def logout():
