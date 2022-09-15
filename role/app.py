@@ -36,8 +36,8 @@ def build():
                 session['user_id']=users
                 return redirect(url_for('index'))
             else:
-                return render_template('login.html')
-        return render_template('login.html')
+                return render_template('login.jinja')
+        return render_template('login.jinja')
 
 
     @a.route('/index',methods=['GET','POST'])
@@ -45,29 +45,29 @@ def build():
     @roles(['1','2','3'])
     def index():
         # return dict(value=42)
-        return render_template('index.html')
+        return render_template('index.jinja')
 
     @a.route('/admin',methods=['GET','POST'])
     @login_required
     @roles(['1'])
     def admin():
-        return render_template('admin.html')
+        return render_template('admin.jinja')
 
     @a.route('/staff',methods=['GET','POST'])
     @login_required
     @roles(['2'])
     def staff():
-        return render_template('staff.html')
+        return render_template('staff.jinja')
 
     @a.route('/public',methods=['GET','POST'])
     @login_required
     @roles(['3'])
     def public():
-        return render_template('public.html')
+        return render_template('public.jinja')
 
     @a.route('/error',methods=['GET','POST'])
     def error():
-        return render_template('error.html')
+        return render_template('error.jinja')
 
     @a.route('/logout',methods=['GET','POST'])
     def logout():

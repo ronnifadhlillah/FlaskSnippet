@@ -4,26 +4,25 @@ import random
 import time
 import json
 
-application = Flask(__name__)
+a = Flask(__name__,template_folder='')
 random.seed()
 
-
-@application.route('/')
+@a.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.jinja')
 
 
-@application.route('/chart-data')
-def chart_data():
-    def generate_random_data():
+@a.route('/chartData')
+def chartData():
+    def gmd():
         while True:
             json_data = json.dumps(
                 {'time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'value': random.random() * 100})
             yield f"data:{json_data}\n\n"
             time.sleep(5)
 
-    return Response(generate_random_data(), mimetype='text/event-stream')
+    return Response(gmd(), mimetype='text/event-stream')
 
 
 if __name__ == '__main__':
-    application.run(debug=True, threaded=True)
+    a.run()
