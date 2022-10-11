@@ -1,4 +1,6 @@
 /venv/
 __pycache__
 *.bak
-*.jinja
+/hook/*.jinja
+/role/*.jinja
+/streamSSE/*.jinja
